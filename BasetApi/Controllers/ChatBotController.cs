@@ -1,0 +1,36 @@
+using BasetApi.Concrete;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace BasetApi.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ChatBotController : Controller
+    {
+        private readonly Context _context;
+
+        public ChatBotController(Context context)
+        {
+            _context = context;
+        }
+
+        [HttpPost("chatbot")]
+        public IActionResult GetProductByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Mehsul Adı Girilmedi.");
+            }
+
+            var product = _context.Products.Where(x => x.ProductName == null && x.ProductName.ToLower().Contains(name.ToLower())).FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                return NotFound($"Axtarılan Mehsul '{name}' mövcud deyil.");
+            }
+            
+            return Ok(product);
+        }
+    }
+}
