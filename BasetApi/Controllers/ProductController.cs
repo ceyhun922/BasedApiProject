@@ -7,7 +7,7 @@ namespace BasetApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [AllowAnonymous]
     public class ProductController : ControllerBase
     {
         private readonly Context _context;

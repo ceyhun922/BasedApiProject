@@ -9,6 +9,8 @@ namespace BasetApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
+
     public class CartController : ControllerBase
     {
         private readonly Context _context;

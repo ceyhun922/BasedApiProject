@@ -66,7 +66,6 @@ namespace BasetApi.Extansions
 
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddApplicationPart(typeof(AdminController).Assembly)
                 .AddJsonOptions(x =>
                     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
                     }
