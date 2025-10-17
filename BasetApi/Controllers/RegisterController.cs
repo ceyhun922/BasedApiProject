@@ -41,7 +41,7 @@ namespace BasetApi.Controllers
 
             var user = new User
             {
-                UserName = dto.Name,
+                UserName = dto.EMail,
                 Name = dto.Name,
                 Surname = dto.SurName,
                 Email = dto.EMail,

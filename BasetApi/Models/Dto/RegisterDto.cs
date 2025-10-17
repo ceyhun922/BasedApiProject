@@ -7,6 +7,8 @@ namespace BasetApi.Models.Dto
         public string? EMail { get; set; }
         public string? Number { get; set; }
 
+        public string? Username { get; set; }
+
         public string? Role { get; set; }
         public string? UserPassword { get; set; }
         public string? UserPasswordConfirm { get; set; }
