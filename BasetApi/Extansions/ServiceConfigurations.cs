@@ -34,6 +34,7 @@ namespace BasetApi.Extansions
 
         public static void ConfigureSwaggerBased(this IServiceCollection services)
         {
+            services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

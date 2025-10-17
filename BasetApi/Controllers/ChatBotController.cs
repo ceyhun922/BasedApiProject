@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BasetApi.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,21 +19,25 @@ namespace BasetApi.Controllers
         }
 
         [HttpPost("chatbot")]
-        public IActionResult GetProductByName(string name)
+        public async Task<IActionResult> GetProductByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 return BadRequest("Mehsul Adı Girilmedi.");
             }
 
-            var product = _context.Products.Where(x => x.ProductName == null && x.ProductName.ToLower().Contains(name.ToLower())).FirstOrDefaultAsync();
+            var product = await _context.Products
+                .Where(x => x.ProductName != null &&
+                            x.ProductName.ToLower().Contains(name.ToLower()))
+                .FirstOrDefaultAsync();
 
             if (product == null)
             {
                 return NotFound($"Axtarılan Mehsul '{name}' mövcud deyil.");
             }
-            
+
             return Ok(product);
         }
+
     }
 }

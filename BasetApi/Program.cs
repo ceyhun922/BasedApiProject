@@ -4,7 +4,7 @@ using BasetApi.Service;
 using DotNetEnv;
 using BasetApi.Extansions;
 
-DotNetEnv.Env.Load(); 
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,24 +19,24 @@ builder.Configuration["SendGrid:ApiKey"] = Environment.GetEnvironmentVariable("S
 builder.Configuration["SendGrid:FromEmail"] = Environment.GetEnvironmentVariable("SENDGRID_FROM_EMAIL");
 builder.Configuration["SendGrid:FromName"] = Environment.GetEnvironmentVariable("SENDGRID_FROM_NAME");
 
+builder.Services.AddControllers();
 builder.Services.ConfigureControllersBased();
 builder.Services.ConfigureDbContext(builder.Configuration);
 builder.Services.ConfigureIdentity();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureSwaggerBased();
+builder.Services.ConfigureCorsBased();
 builder.Services.AddScoped<JwtService>();
-
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.MapGet("/ping", () => "pong");
+app.UseSwagger();
+app.ConfigureSwaggerUI();
 app.UseHttpsRedirection();
+app.UseCors("AllowNext");
 app.UseAuthentication();
+await app.ConfigureAdminUser();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
